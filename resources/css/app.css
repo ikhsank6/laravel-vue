@@ -1,0 +1,677 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * One identity, two surfaces (see DESIGN.md): Apple-derived palette, a single Action Blue accent.
+ * - website: pill CTAs, 18px cards, 44px controls, tiles that swap surface color as dividers.
+ * - admin (auth + panel): same colors, 8px controls, 11px hairline cards, dense rows.
+ * Components read shape tokens (--btn-*, --field-*, --card-*), so they change with the surface.
+ */
+@theme inline {
+    --font-sans: var(--surface-font);
+    --font-display: 'Literata Variable', ui-serif, Georgia, serif;
+    --font-weight-medium: 600;
+
+    --radius-xs: 3px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: var(--surface-radius-lg);
+    --radius-xl: 10px;
+
+    --shadow-elevated: var(--elevation-1);
+    --shadow-dialog: var(--elevation-2);
+
+    --color-frame: var(--frame);
+    --color-link: var(--link);
+    --color-highlight: var(--highlight);
+    --color-tile: var(--tile);
+    --color-chip: var(--chip);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-info: var(--info);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+    --surface-font:
+        'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+    --surface-radius-lg: 8px;
+    --btn-radius: 6px;
+    --btn-weight: 600;
+    --btn-h: 44px;
+    --field-radius: 6px;
+    --field-bg: var(--card);
+    --card-border: 0px;
+    --card-shadow: none;
+
+    /* Brand palette: navy ink and brand blue as cores, gold as the single accent. */
+    --frame: #0f2a4a;
+    --background: #ffffff;
+    --foreground: #0f2a4a;
+    --card: #ffffff;
+    --card-foreground: #0f2a4a;
+    --popover: #ffffff;
+    --popover-foreground: #0f2a4a;
+    --primary: #2563a8;
+    --primary-foreground: #ffffff;
+    --link: #2563a8;
+    --highlight: #f2b01e;
+    --secondary: #eef4fb;
+    --secondary-foreground: #0f2a4a;
+    --muted: #eef4fb;
+    --muted-foreground: #4a5f78;
+    --accent: #e1ebf7;
+    --accent-foreground: #0f2a4a;
+    --destructive: #c4321c;
+    --destructive-foreground: #ffffff;
+    --success: #2a7d2e;
+    --warning: #8a5a00;
+    --info: #2563a8;
+    --border: #d5e1ef;
+    --input: #6b84a0;
+    --ring: #2563a8;
+    --tile: #12365f;
+    --chip: rgb(15 42 74 / 0.1);
+    --chart-1: #2563a8;
+    --chart-2: #b07a00;
+    --chart-3: #2a7d2e;
+    --chart-4: #c4321c;
+    --chart-5: #4a5f78;
+    --radius: 8px;
+    --elevation-1: 0 8px 30px rgb(15 42 74 / 0.16);
+    --elevation-2: 0 8px 30px rgb(15 42 74 / 0.2);
+    --sidebar: #0f2a4a;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #2563a8;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #12365f;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgb(255 255 255 / 0.14);
+    --sidebar-ring: #f2b01e;
+}
+
+.dark {
+    --frame: #081526;
+    --background: #0a1a2e;
+    --foreground: #eaf2fb;
+    --card: #12294a;
+    --card-foreground: #eaf2fb;
+    --popover: #183560;
+    --popover-foreground: #eaf2fb;
+    --primary: #5db4f0;
+    --primary-foreground: #0a1a2e;
+    --link: #7cc4ff;
+    --secondary: #0f2240;
+    --secondary-foreground: #eaf2fb;
+    --muted: #0f2240;
+    --muted-foreground: #9db6d1;
+    --accent: #183560;
+    --accent-foreground: #eaf2fb;
+    --destructive: #ff8a75;
+    --destructive-foreground: #2a0a05;
+    --success: #6fd37a;
+    --warning: #f2b01e;
+    --info: #7cc4ff;
+    --border: rgb(255 255 255 / 0.14);
+    --input: #5f7a99;
+    --ring: #7cc4ff;
+    --chip: rgb(255 255 255 / 0.12);
+    --chart-1: #5db4f0;
+    --chart-2: #f2b01e;
+    --chart-3: #6fd37a;
+    --chart-4: #ff8a75;
+    --chart-5: #9db6d1;
+    --elevation-1: 0 8px 30px rgb(0 0 0 / 0.5);
+    --elevation-2: 0 8px 30px rgb(0 0 0 / 0.5);
+}
+
+/* Admin surface: seafoam ground with white hairline cards, utility-sized controls. */
+:root[data-surface='admin'] {
+    --card-border: 1px;
+    --background: #eef4fb;
+}
+
+:root[data-surface='admin'].dark {
+    --background: #0a1a2e;
+}
+
+@media (min-width: 640px) {
+    :root[data-surface='admin'] {
+        --btn-h: 36px;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-size: 17px;
+        line-height: 1.47;
+        letter-spacing: -0.01em;
+    }
+
+    :root[data-surface='admin'] body {
+        font-size: 14px;
+        line-height: 1.43;
+        letter-spacing: -0.005em;
+    }
+
+    h1,
+    h2,
+    h3 {
+        text-wrap: balance;
+    }
+
+    /* Keyboard focus: 2px ring in the focus color, visible on every surface (R-32). */
+    :where(a, button, [role='button'], summary, [tabindex]):focus-visible {
+        @apply outline-2 outline-offset-2 outline-ring;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+}
+
+@layer components {
+    /* Card shell: white tile on the website, hairline card in admin. */
+    .card-surface {
+        border-radius: var(--radius-lg);
+        border: var(--card-border) solid var(--border);
+        background-color: var(--card);
+        box-shadow: var(--card-shadow);
+    }
+
+    /*
+     * Tiles: full-bleed bands whose surface color is the divider (identity motif).
+     * tile-dark keeps the same dark surface in both themes and remaps the text tokens
+     * so every descendant using text-foreground / text-muted-foreground stays legible.
+     */
+    .tile-light {
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    .tile-parchment {
+        background-color: var(--muted);
+        color: var(--foreground);
+    }
+
+    .tile-dark {
+        --foreground: #eaf2fb;
+        --muted-foreground: #9db6d1;
+        --link: #7cc4ff;
+        --ring: #f2b01e;
+        --border: rgb(255 255 255 / 0.14);
+        --card: #1a4577;
+        --muted: #0f2240;
+        --accent: #235592;
+        --chip: rgb(255 255 255 / 0.12);
+        background-color: var(--tile);
+        color: var(--foreground);
+    }
+
+    /*
+     * Page band (admin): a flat tint of the brand blue behind the page title marks the title
+     * level; its lower edge carries the certificate rule. It bleeds to the edges of the content
+     * area via container units, so it needs an @container ancestor.
+     */
+    .page-tide {
+        position: relative;
+        margin-inline: calc(50% - 50cqw);
+        padding-inline: calc(50cqw - 50%);
+        margin-bottom: 1.75rem;
+        background-color: color-mix(
+            in oklab,
+            var(--primary) 7%,
+            var(--background)
+        );
+    }
+
+    /*
+     * Certificate rule (identity motif): the interlaced sine lines printed along the border of
+     * a certificate. A thin strip of it divides major website sections and finishes page bands.
+     */
+    .rule-guilloche {
+        height: 10px;
+        background-color: var(--highlight);
+        -webkit-mask: var(--guilloche) repeat-x center / 40px 10px;
+        mask: var(--guilloche) repeat-x center / 40px 10px;
+        animation: drift 28s linear infinite;
+    }
+
+    /*
+     * Nav link hover: the gold underline slides in from the left; the active page keeps it
+     * fully drawn. Color follows 200ms, the underline 250ms (transform only).
+     */
+    .nav-link {
+        position: relative;
+        transition:
+            color 0.2s,
+            transform 0.2s,
+            background-color 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .nav-link:hover {
+        transform: translateY(-1px);
+        text-shadow: 0 2px 6px rgb(0 0 0 / 0.4);
+    }
+
+    /* The current page reads as a pressed key. */
+    .nav-link[aria-current='page'] {
+        background-color: rgb(0 0 0 / 0.2);
+        box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.4);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0.75rem;
+        bottom: 0;
+        height: 2px;
+        border-radius: 1px;
+        background-color: var(--highlight);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition:
+            transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.2s;
+    }
+
+    .nav-link:hover::after {
+        transform: scaleX(1);
+        opacity: 0.65;
+    }
+
+    .nav-link[aria-current='page']::after {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+
+    /*
+     * 3D navbar: a raised bar lit from above. A faint top light, a bevel highlight on the top
+     * edge, a dark bevel on the bottom edge, and a soft drop shadow below that deepens once
+     * the page scrolls under it. The light gradient is the only gradient in the system and
+     * exists to model the bar's depth, not as decoration.
+     */
+    .nav-3d {
+        background-image: linear-gradient(
+            to bottom,
+            rgb(255 255 255 / 0.08),
+            rgb(255 255 255 / 0) 60%
+        );
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.14),
+            inset 0 -1px 0 rgb(0 0 0 / 0.4),
+            0 1px 0 rgb(0 0 0 / 0.45),
+            0 8px 16px -8px rgb(8 21 38 / 0.55);
+        transition: box-shadow 0.3s;
+    }
+
+    .nav-3d[data-scrolled='true'] {
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.14),
+            inset 0 -1px 0 rgb(0 0 0 / 0.4),
+            0 1px 0 rgb(0 0 0 / 0.5),
+            0 18px 30px -12px rgb(8 21 38 / 0.8);
+    }
+}
+
+/* Guilloche: two sine lines in opposite phase, interlaced. Seamless every 40px. */
+:root {
+    --guilloche: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10'%3E%3Cpath d='M0 5Q10 0 20 5T40 5M0 5Q10 10 20 5T40 5' fill='none' stroke='black' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/*
+ * Motion (website MOTION 2): every effect answers a purpose and runs once.
+ * - .rise: staged entrance for the hero, which re-plays when the slide changes.
+ * - .reveal: content below the fold settles in when first scrolled to (see lib/reveal.ts).
+ * Reduced-motion users get the final state with no movement (base layer rule above).
+ */
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.rise {
+    animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--rise-delay, 0ms);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Certificate sequence: units tick in, then the seal is stamped. Plays once. */
+@keyframes tick {
+    from {
+        stroke-dashoffset: 24;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes stamp {
+    from {
+        opacity: 0;
+        transform: scale(1.22) rotate(-4deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(-4deg);
+    }
+}
+
+@keyframes grow-y {
+    from {
+        transform: scaleY(0);
+    }
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes draw-x {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.cert-tick {
+    stroke-dasharray: 24;
+    animation: tick 0.45s ease-out both;
+    animation-delay: var(--d, 0ms);
+}
+
+.cert-seal {
+    transform-origin: center;
+    animation: stamp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+}
+
+/*
+ * Ambient motion (website MOTION 3). Only decorative layers loop, all of them slowly:
+ * rosette layers turn (90 to 200s per turn), the certificate floats a few pixels, and the
+ * guilloche rule drifts. Content never loops. Reduced-motion users get all of it still.
+ */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin-rev {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes drift {
+    to {
+        -webkit-mask-position: 40px center;
+        mask-position: 40px center;
+    }
+}
+
+.spin-slow,
+.spin-slow-rev,
+.spin-slower {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.spin-slow {
+    animation: spin 90s linear infinite;
+}
+
+.spin-slow-rev {
+    animation: spin-rev 140s linear infinite;
+}
+
+.spin-slower {
+    animation: spin 200s linear infinite;
+}
+
+.float-slow {
+    animation: float 7s ease-in-out infinite;
+}
+
+/* Failed submit: the form gives one short sideways nudge, then the first bad field is focused. */
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20%,
+    60% {
+        transform: translateX(-6px);
+    }
+    40%,
+    80% {
+        transform: translateX(6px);
+    }
+}
+
+.shake {
+    animation: shake 0.35s ease-in-out;
+}
+
+/* Pencil on the test sheet: a small back-and-forth, like writing. */
+@keyframes write {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(7px, 2px);
+    }
+}
+
+.write-motion {
+    animation: write 2.4s ease-in-out infinite;
+}
+
+/* Pointer parallax set by the hero (CSS variables --px/--py, -1 to 1). */
+.parallax-card {
+    transform: translate3d(
+            calc(var(--px, 0) * 10px),
+            calc(var(--py, 0) * 8px),
+            0
+        )
+        rotateY(calc(var(--px, 0) * 5deg)) rotateX(calc(var(--py, 0) * -4deg));
+    transition: transform 0.25s ease-out;
+}
+
+.parallax-bg {
+    transform: translate3d(
+        calc(var(--px, 0) * -16px),
+        calc(var(--py, 0) * -12px),
+        0
+    );
+    transition: transform 0.4s ease-out;
+}
+
+/* Page change: the outgoing page fades quickly, the incoming one a touch slower. */
+.page-enter-active {
+    transition: opacity 0.22s ease-out;
+}
+
+.page-leave-active {
+    transition: opacity 0.12s ease-in;
+}
+
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+}
+
+/* Elements inside a revealed block animate only after the block becomes visible. */
+.reveal:not(.is-visible) .on-reveal {
+    animation-play-state: paused;
+}
+
+.stair-step {
+    transform-origin: bottom;
+    animation: grow-y 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+}
+
+.path-line {
+    transform-origin: left;
+    animation: draw-x 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.path-node {
+    animation: pop 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spin-slow,
+    .spin-slow-rev,
+    .spin-slower,
+    .float-slow,
+    .write-motion,
+    .shake,
+    .rule-guilloche,
+    .cert-tick,
+    .cert-seal,
+    .stair-step,
+    .path-line,
+    .path-node {
+        animation: none;
+    }
+
+    .rise {
+        animation: none;
+    }
+
+    .parallax-card,
+    .parallax-bg {
+        transform: none;
+        transition: none;
+    }
+
+    .page-enter-active,
+    .page-leave-active {
+        transition: none;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Inertia progress bar follows the primary so it keeps contrast in both themes. */
+#nprogress .bar {
+    background: var(--primary) !important;
+}
